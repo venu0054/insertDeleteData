@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<body>
+
+<h2>Insertion and Deletion of Data</h2>
+
+<div id="app">
+   <input
+    v-model="newTodoText"
+    v-on:keyup.enter="InsertOperation"
+    placeholder="Add data"
+  >
+  
+  <ul>  
+  <li      
+      v-for="(rec, index) in record"
+      v-bind:title="rec"
+      v-on:remove="record.splice(index, 1)"
+    >
+	<input type="button" value="Delete" v-on:click="DeleteOperation(index);"/>
+	<span>{{rec}}</span>
+	</li>
+	
+  </ul>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    newTodoText: '',
+    record: [
+      'Learn Vue',
+      'Learn Angular',
+      'Learn React'
+    ]
+  },
+  methods: {
+    InsertOperation: function () {
+      this.record.push(this.newTodoText)
+      this.newTodoText = ''
+    },
+	DeleteOperation: function(index){
+		this.record.splice(index,1);
+	}
+  }
+})
+</script>
+
+</body>
+</html>
