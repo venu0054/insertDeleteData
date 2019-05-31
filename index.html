@@ -8,17 +8,18 @@
 <div id="app">
    <input
     v-model="newTodoText"
-    v-on:keyup.enter="InsertOperation"
+    @keyup.enter="insertOperation"
     placeholder="Add data"
   >
   
   <ul>  
-  <li      
+  <li 
       v-for="(rec, index) in record"
-      v-bind:title="rec"
-      v-on:remove="record.splice(index, 1)"
+      @bind:title="rec"
+      @click="record.splice(index, 1)"
     >
-	<input type="button" value="Delete" v-on:click="DeleteOperation(index);"/>
+	<!-- Below is the code for Delete operation performed on click of the Delete button -->
+	<input type="button" value="Delete" @click="deleteOperation(index);"/>
 	<span>{{rec}}</span>
 	</li>
 	
@@ -26,6 +27,19 @@
 </div>
 
 <script>
+
+// below code is for Deleting the data using emit function.
+
+//Vue.component('data-item', {
+//  template: '\
+//    <li>\
+//      {{ title }}\
+//      <button @click="$emit(\'remove\')">Delete</button>\
+//    </li>\
+//  ',
+//  props: ['title']
+//})
+  
 new Vue({
   el: '#app',
   data: {
@@ -37,11 +51,13 @@ new Vue({
     ]
   },
   methods: {
-    InsertOperation: function () {
+	// Insertion function to insert data to the array 
+    insertOperation: function () {
       this.record.push(this.newTodoText)
       this.newTodoText = ''
     },
-	DeleteOperation: function(index){
+	// deletion function to delete data from the array 	
+	deleteOperation: function(index){
 		this.record.splice(index,1);
 	}
   }
